@@ -3,11 +3,18 @@ import { useNavigation } from '@react-navigation/native'
 import { Container, Modal, StyleSheet, SafeAreaView, Text, View, ScrollView, Pressable } from 'react-native'
 
 const Word = ({ item }) => {
+  
+  //const navigation = useNavigation();
 
   const { word, wordES } = item
 
   return (
-    <Text style={styles.label}>{word}</Text>
+
+    <View style={styles.contenedor}>
+      <Text style={styles.label}> {word} </Text>
+      <Text style={styles.texto}> {wordES} </Text>
+    </View>
+    
     // <Modal
     //   animationType='slide'
     //   visible={modalVisibleWords}
@@ -30,10 +37,12 @@ const Word = ({ item }) => {
 const styles = StyleSheet.create({
   contenedor: {
     backgroundColor: '#FFF',
-    padding: 20
+    padding: 20,
+    borderBottomColor: '#94a2B8',
+    borderBottomWidth: 3 //Mark separation between label
   },
   label: {
-    color: '#000',
+    color: '#98ceca',
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 10

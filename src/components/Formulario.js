@@ -150,7 +150,7 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
               />
             <Text style={styles.label}>Image</Text>
             <Button title="Choose from Device" />
-              <View style={styles.campo}>
+              {/* <View style={styles.campo}>
                     <Text style={styles.label}>Date start</Text>
                     
                     <View style={styles.fechaSContenedor}>
@@ -161,7 +161,7 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
                         />
                     </View>
 
-                    {/* <Text style={styles.label}>Day end</Text>
+                    <Text style={styles.label}>Day end</Text>
                     <View style={styles.fechaSContenedor}>
                         <DatePicker 
                             date={timeStart}
@@ -175,9 +175,9 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
                         style={styles.input}
                         placeholder='Times per day'
                         placeholderTextColor={'#666'}
-                      /> */}
-                </View>
-              </View>
+                      />
+              </View> */}
+          </View>
 
             <Pressable 
               style={styles.btnNuevo} 
@@ -186,33 +186,6 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
                 Add
               </Text>
             </Pressable>
-            {/* <Text style={styles.label}>Start</Text>
-            <View 
-              style={styles.fechaContenedor}
-              >
-                <Text style={styles.campo}>
-                  Fecha de inicio
-                </Text>
-                <View style={fechaSContenedor}>
-                  <DatePicker
-                    modal
-                    date={timeStart}
-                    locale='es'
-                    // mode='time'
-                    />
-                </View>
-            </View> */}
-            {/* <Text style={styles.label}>Start</Text>
-            <View 
-              style={styles.fechaContenedor}
-              >
-                <DatePicker
-                  date={timeEnd}
-                  locale='es'
-                  // mode='time'
-                  />
-            </View> */}
-
 
         </ScrollView>
       </SafeAreaView>

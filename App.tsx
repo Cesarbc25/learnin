@@ -22,13 +22,17 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 // import { NavigationContainer } from '@react-navigation/native';
+import 'react-native-gesture-handler'
 import { useNavigation, NavigationContainer } from '@react-navigation/native'
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
+
+const Stack = createStackNavigator();
 
 import Formulario from './src/components/Formulario'
 import Verbs from './src/components/Verbs';
 import Word from './src/components/Word';
 import Vocab from './src/components/Vocab';
+import Home from './src/components/Home';
 // const navigation = useNavigation();
 
 /**
@@ -63,83 +67,37 @@ const App = () => {
   /** debug cmd + D **/
 
   return (
+  <>
 
-    <SafeAreaView style={styles.container}>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+              name="Home"
+              component={ Home }
+              options={{
+                  title: "Learnin"
+              }}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+              name="Vocab"
+              component={ Vocab }
+              options={{
+                title: "Vocab"
+              }}
+          >
 
-      <Text style={styles.titulo}>Categorías {''}
-        {/* <Text style={styles.tituloBold}>Veterinaria</Text> */}
-      </Text>
-    
-      <Pressable
-        style={styles.btnAdd}
-        onPress={() => setModalVisible(!modalVisible)}
-      >
-        <Text
-          style={styles.btnAddText}
-        >Add</Text>
-      </Pressable>
-    
+          </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
 
-      {/* <Pressable
-        style={styles.btnPhrsal}
-      > */}
-      <Pressable
-        style={styles.btnPhrsal}
-        onPress={() => setModalVisibleWords(!modalVisibleWords)}
-      ></Pressable>
-      <Text
-        style={styles.btnTextPhrsal}
-      >Verbs
-      </Text>
-      {/* </Pressable> */}
-    
-      {words.length === 0 ? 
-          <Text style={styles.noWords}>No hay pacientes aún</Text> :
-          <FlatList
-            data={words}
-            keyExtractor={(item) => item.id}
-            renderItem={({item}) => {
-              return(
-                <Word
-                  item={item}
-                />
-              )
-            }}
-            
-          />
-      }
-    
-      <Formulario
-        modalVisible={modalVisible} 
-        setModalVisible={setModalVisible}
-        words={words}
-        setWords={setWords}
-      />
-
-      <Vocab
-        modalVisibleWords={modalVisibleWords} 
-        setModalVisibleWords={setModalVisibleWords}
-        words={words}
-        setWords={setWords}
-
-      />
-
-
-      <Modal
-        visible={modalVisibleWords}
-        animationType='slide'
-      >
-      </Modal>
-    
-    </SafeAreaView>
-
-
+  </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F3F4F6',
+    backgroundColor: '#98ceca',
     flex: 7
   },
   app:{
