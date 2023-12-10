@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Image, Text, Button, SafeAreaView, TextInput, View, StyleSheet, ScrollView, Pressable, Alert } from 'react-native'
 import DatePicker from 'react-native-date-picker'
+import Word from './Word';
 
-import Vocab from './Word';
+// DISTRUCTURING WORDOBJ
+const formulario = ({  modalVisible, closeModal, words, setWords, word: wordObj, setWord: setWordVocab}) => {
 
-const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}) => {
-
+  const [id, setId] = useState('')
   const [word, setWord] = useState('')
-  const [wordES, setWordES] = useState('')
+  const [traduction, setTraduction] = useState('')
   const [category, setCategory] = useState('')
   const [definition, setDefinition] = useState('')
   const [example, setExample] = useState('')
   const [image, setImage] = useState('')
-  const [timeStart, setTimeStart] = useState(new Date()) //Object
-  const [timeEnd, setTimeEnd] = useState(new Date())
-  const [times, setTimes] = useState('')
+
+  wordObj = {}
+
+  useEffect(() => {
+    if(Object.keys(wordObj) .length > 0) {
+      // console.log('Si hay allgo')
+      setId(wordObj.id)
+      setWord(wordObj.word)
+      setTraduction(wordObj.traduction)
+      setCategory(wordObj.category)
+      setDefinition(wordObj.definition)
+      setExample(wordObj.example)
+      setImage(wordObj.image)
+
+    } 
+
+  }, [wordObj])
+  
 
   // const pickImage = async () => {
   //     // No permissions request is necessary for launching the image library
@@ -46,7 +62,7 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
 
   const handleWord = () => {
     // Validar
-    if([word, wordES, category].includes('')){
+    if([word, traduction, category].includes('')){
       // Mensajes / botones
       Alert.alert(
         'Error',
@@ -58,33 +74,43 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
 
     // Objeto
     const newWord = {
-      id: Date.now(),
       word,
-      wordES,
+      traduction,
       category,
       definition,
       example, 
-      image,
-      timeStart,
-      timeEnd,
-      times
+      image
     }
-      // Tomar lo del state y agregarlo
-    setWords([...words, newWord]) 
-    setModalVisible(!modalVisible)
 
+    if(id) {
+        // Editing
+      newWord.id = id
+
+      const wordUpdated = words.map( wordState =>
+        wordState.id === newWord.id ? newWord :
+        wordState ) // Move and verify 
+        setWords(wordUpdated)
+        setWordVocab({})
+
+        
+    } else {
+        // New registration
+      newWord.id = Date.now()  
+      setWords([...words, newWord]) 
+    }
+
+
+      // Tomar lo del state y agregarlo
+
+    closeModal()
+    setId('')
     setWord('')
-    setWord('')
-    setWordES('')
+    setTraduction('')
     setCategory('')
     setDefinition('')
     setExample('')
     setImage('')
-    setTimeStart(new Date())
-    setTimeEnd(new Date())
-    setTimes('')
 
-    console.log(newWord)
   }
 
 
@@ -103,7 +129,18 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
           </Text>
 
           <Pressable style={ styles.btnCancel }
-            onPress={ () => setModalVisible(false)}
+            onPress={ () => {
+             closeModal()
+              setWordVocab({})
+              setId('')
+              setWord('')
+              setTraduction('')
+              setCategory('')
+              setDefinition('')
+              setExample('')
+              setImage('')
+          
+              }}
           >
             <Text style={ styles.btnCancelTxt }> Cancel X </Text>
           </Pressable>
@@ -116,15 +153,15 @@ const formulario = ({navigation, modalVisible, setModalVisible, words, setWords}
               value={word}
               onChangeText={setWord}
             />
-            <Text style={styles.label}>Word ES</Text>
+            <Text style={styles.label}>Traduction</Text>
             <TextInput
               style={styles.input}
               placeholder='Word Spanish'
               placeholderTextColor={'#666'}
-              value={wordES}
-              onChangeText={setWordES}
+              value={traduction}
+              onChangeText={setTraduction}
             />
-            <Text style={styles.label}>Categoría</Text>
+            <Text style={styles.label}>Category</Text>
             <TextInput
               style={styles.input}
               placeholder='Category'

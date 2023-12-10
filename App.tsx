@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Pressable,
@@ -33,6 +33,7 @@ import Verbs from './src/components/Verbs';
 import Word from './src/components/Word';
 import Vocab from './src/components/Vocab';
 import Home from './src/components/Home';
+import InfoWord from './src/components/InfoWord';
 // const navigation = useNavigation();
 
 /**
@@ -49,6 +50,7 @@ const App = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [modalVisibleVerbs, setModalVisibleVerbs] = useState(false)
   const [modalVisibleWords, setModalVisibleWords] = useState(false)
+  const [modalWords, setModalWords] = useState(false)
 
   const [words, setWords] = useState([])
   const [verb, setVerb] = useState([])

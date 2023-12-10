@@ -7,21 +7,35 @@ import 'react-native-gesture-handler'
 
 import Formulario from '../components/Formulario'
 import Word from '../components/Word';
+import InfoWord from '../components/InfoWord';
 import Home from '../components/Home';
 
-const Vocab = (word, setWord) => {
+const Vocab = () => {
   
-  const navigation = useNavigation();
-
   // const [words, setWords] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
 
   const [words, setWords] = useState([])
-  const [verb, setVerb] = useState([])
+  const [word, setWord] = useState({}) //just one
+  const [modalWords, setModalWords] = useState(false) 
+
+  /****
+   * 
+   * Move parameter another component
+   * 
+   *  */ 
+  const wordEdit = id => { 
+    const wordEdit = words.filter(word => word.id === id)
+    setWord(wordEdit[0])
+  }
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
 
   return (
 
-    <View>
+    <SafeAreaView>
         <Pressable
         style={styles.btnAdd}
         onPress={() => setModalVisible(!modalVisible)}
@@ -41,20 +55,41 @@ const Vocab = (word, setWord) => {
               return(
                 <Word
                   item={item}
+                  setModalVisible={setModalVisible}
+                  setWord={setWord}
+                  wordEdit={wordEdit}
+                  setModalWords={setModalWords}
                 />
               )
             }}
-            
           />
       }
-      <Formulario
-        modalVisible={modalVisible} 
-        setModalVisible={setModalVisible}
-        words={words}
-        setWords={setWords}
-      />
+      
+      {modalVisible && (
+        <Formulario
+          closeModal={closeModal}
+          // modalVisible={modalVisible} 
+          // setModalVisible={setModalVisible}
+          words={words}
+          setWords={setWords}
+          word={word}
+          setWord={setWord}
+        />
+      )}
 
-    </View>
+      <Modal
+        visible={modalWords}
+        animationType='slide'
+      >
+
+        <InfoWord
+          word={word}
+          setWord={setWord}
+          setModalWords={setModalWords}
+        />
+      </Modal>
+
+    </SafeAreaView>
   );
 }
 
@@ -90,10 +125,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   btnAdd: {
-    borderColor: "#000",
+    backgroundColor: "#98ceca",
+    borderColor: "#FFF",
     borderWidth: 1,
-    marginVertical: 20,
+    marginVertical: 1,
     marginHorizontal: 130,
+    marginTop: 50,
     padding: 1,
     borderRadius: 5,
   },
@@ -103,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     fontSize: 15,
-    color: '#000'
+    color: '#FFF'
   },
   noWords: {
     marginTop: 40,
