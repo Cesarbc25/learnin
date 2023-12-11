@@ -44,6 +44,8 @@ const Vocab = () => {
           style={styles.btnAddText}
         >Add</Text>
       </Pressable>
+
+
     
       {words.length === 0 ? 
           <Text style={styles.noWords}>Don't have words</Text> :

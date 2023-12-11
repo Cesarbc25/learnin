@@ -7,6 +7,7 @@ import { StackView, createStackNavigator } from '@react-navigation/stack';
 import Formulario from '../components/Formulario'
 import Word from '../components/Word';
 import Vocab from '../components/Vocab';
+import Reminder from './Reminder';
 
 const Home = () => {
 
@@ -14,7 +15,7 @@ const navigation = useNavigation();
 
   // SHOW MODAL FORMULARIO
   const [modalVisible, setModalVisible] = useState(false)
-  const [modalVisibleVerbs, setModalVisibleVerbs] = useState(false)
+  const [modalVisibleRemind, setModalVisibleRemind] = useState(false)
   const [modalVisibleWords, setModalVisibleWords] = useState(false)
 
   const [words, setWords] = useState([])
@@ -22,6 +23,10 @@ const navigation = useNavigation();
 
   // const navigation = useNavigation();
 
+  
+  const closeModalRemind = () => {
+    setModalVisibleRemind(false)
+  }
 
   setTimeout(() => {
     setModalVisible(false)
@@ -29,6 +34,10 @@ const navigation = useNavigation();
 
   setTimeout(() => {
     setModalVisibleWords(false)
+  }, 100000);
+
+  setTimeout(() => {
+    setModalVisibleRemind(false)
   }, 100000);
 
 //   const { word, wordES } = item
@@ -65,6 +74,17 @@ const navigation = useNavigation();
         >Verbs
         </Text>
       </Pressable>
+
+      <Pressable
+          style={styles.btnReminder} 
+
+          onPress={() => setModalVisibleRemind(!modalVisibleRemind)}
+      >
+        <Text
+            style={styles.btnTextReminder}
+          >Reminder
+          </Text>
+      </Pressable>
       {/* </Pressable> */}
     
       {/* {words.length === 0 ? 
@@ -88,6 +108,11 @@ const navigation = useNavigation();
         setModalVisible={setModalVisible}
         words={words}
         setWords={setWords}
+      />
+      
+      <Reminder
+        modalVisibleRemind={modalVisibleRemind} 
+        setModalVisibleRemind={setModalVisibleRemind}
       />
 
       {/* <Vocab
@@ -176,7 +201,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24, 
     fontWeight: '600'
+  },
+  btnTextReminder: {
+    textAlign: 'center',
+    color: '#000',
+    fontSize: 18,
+    fontWeight: '900',
+    textTransform: 'uppercase'
+
+  },
+  btnReminder: {
+    backgroundColor: '#98ceca',
+    padding: 15,
+    marginTop: 300,
+    marginLeft: 80,
+    marginRight: 80,
+    borderRadius: 300  
   }
+
 });
 
 export default Home;

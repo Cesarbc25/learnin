@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Image, Text, Button, SafeAreaView, TextInput, View, StyleSheet, ScrollView, Pressable, Alert } from 'react-native'
 import DatePicker from 'react-native-date-picker'
+
 import Word from './Word';
+import Reminder from '../components/Reminder';
 
 // DISTRUCTURING WORDOBJ
 const formulario = ({  modalVisible, closeModal, words, setWords, word: wordObj, setWord: setWordVocab}) => {
 
-  const [id, setId] = useState('')
-  const [word, setWord] = useState('')
-  const [traduction, setTraduction] = useState('')
-  const [category, setCategory] = useState('')
-  const [definition, setDefinition] = useState('')
-  const [example, setExample] = useState('')
-  const [image, setImage] = useState('')
+  const [id, setId] = React.useState('')
+  const [word, setWord] = React.useState('')
+  const [traduction, setTraduction] = React.useState('')
+  const [category, setCategory] = React.useState('')
+  const [definition, setDefinition] = React.useState('')
+  const [example, setExample] = React.useState('')
+  const [image, setImage] = React.useState('')
 
   wordObj = {}
 
   useEffect(() => {
+
     if(Object.keys(wordObj) .length > 0) {
       // console.log('Si hay allgo')
       setId(wordObj.id)
@@ -96,6 +99,7 @@ const formulario = ({  modalVisible, closeModal, words, setWords, word: wordObj,
     } else {
         // New registration
       newWord.id = Date.now()  
+      console.log(newWord.id)
       setWords([...words, newWord]) 
     }
 
@@ -128,7 +132,8 @@ const formulario = ({  modalVisible, closeModal, words, setWords, word: wordObj,
             </Text>
           </Text>
 
-          <Pressable style={ styles.btnCancel }
+          <Pressable 
+            style={ styles.btnCancel }
             onPress={ () => {
              closeModal()
               setWordVocab({})
